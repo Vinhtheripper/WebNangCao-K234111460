@@ -1,0 +1,31 @@
+<div class="container mt-4">
+  <div class="card">
+    <div class="card-header text-white" [class.bg-success]="isSuccess" [class.bg-danger]="!isSuccess">
+      Login Result
+    </div>
+    <div class="card-body">
+      <table class="table table-bordered">
+        <tr>
+          <th style="width: 180px">Status</th>
+          <td [class.text-success]="isSuccess" [class.text-danger]="!isSuccess">
+            {{ isSuccess ? 'SUCCESS' : 'FAIL' }}
+          </td>
+        </tr>
+        <tr>
+          <th>Message</th>
+          <td>{{ message }}</td>
+        </tr>
+        <tr *ngIf="user">
+          <th>User</th>
+          <td>{{ user }}</td>
+        </tr>
+        <tr>
+          <th>Checked At</th>
+          <td>{{ checkedAt }}</td>
+        </tr>
+      </table>
+
+      <a class="btn btn-primary" routerLink="/ex61/login">Back To Login</a>
+    </div>
+  </div>
+</div>
