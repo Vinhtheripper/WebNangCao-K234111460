@@ -1,0 +1,50 @@
+<div class="fashion-wrap">
+  <h2 class="page-title">Exercise 58 - Fashion Client</h2>
+
+  <div class="toolbar" *ngIf="!selectedFashion">
+    <input
+      type="text"
+      class="search-input"
+      placeholder="Nhap style de tim (vd: Street Style)"
+      [(ngModel)]="keywordStyle"
+      (keyup.enter)="onSearchStyle()"
+    />
+
+    <select class="style-select" [(ngModel)]="selectedStyle" (change)="onStyleDropdownChange()">
+      <option value="">Tat ca style</option>
+      <option *ngFor="let style of styles" [value]="style">{{ style }}</option>
+    </select>
+
+    <button class="btn primary" (click)="onSearchStyle()">Search</button>
+    <button class="btn" (click)="clearFilter()">Clear</button>
+  </div>
+
+  <p *ngIf="loading" class="state-text">Dang tai du lieu...</p>
+  <p *ngIf="errorMessage" class="state-text error">{{ errorMessage }}</p>
+
+  <ng-container *ngIf="!loading && !selectedFashion">
+    <p *ngIf="groupedFashions.length === 0" class="state-text">Khong co du lieu phu hop.</p>
+
+    <section class="style-section" *ngFor="let group of groupedFashions">
+      <h3>{{ group.style }}</h3>
+      <div class="grid">
+        <article class="fashion-card" *ngFor="let item of group.items" (click)="showDetail(item)">
+          <img [src]="item.thumbnail" [alt]="item.title" />
+          <h4>{{ item.title }}</h4>
+          <small>{{ item.createdAt | date: 'dd/MM/yyyy HH:mm' }}</small>
+        </article>
+      </div>
+    </section>
+  </ng-container>
+
+  <section class="detail" *ngIf="selectedFashion">
+    <button class="btn" (click)="backToList()">Back to list</button>
+    <h3>{{ selectedFashion.title }}</h3>
+    <p class="meta">
+      <strong>Style:</strong> {{ selectedFashion.style }} |
+      <strong>Created:</strong> {{ selectedFashion.createdAt | date: 'dd/MM/yyyy HH:mm' }}
+    </p>
+    <img class="detail-image" [src]="selectedFashion.thumbnail" [alt]="selectedFashion.title" />
+    <div class="detail-html" [innerHTML]="selectedFashion.details"></div>
+  </section>
+</div>
